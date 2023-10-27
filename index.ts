@@ -13,15 +13,15 @@ export const prisma =
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 
 
-const isInitialized = (await prisma.loyaltyStoreOffer.count()) > 0;
+const isInitialized = (await prisma.a.count()) > 0;
 
 if (!isInitialized) {
     console.log('going to initialize')
 
-    await prisma.loyaltyStoreOffer.createMany({
+    await prisma.a.createMany({
         data: [...Array(16384).keys()].map(i => ({
-            offerId: i,
-            corporationId: i,
+            key1: i,
+            key2: i,
         }))
     })
 
@@ -30,14 +30,13 @@ if (!isInitialized) {
 
 console.log('going to run buggy query')
 
-await prisma.loyaltyStoreOffer.findMany({
+await prisma.a.findMany({
     select: {
-        offerId: true,
-        corporationId: true,
-        requiredItems: {
+        key1: true,
+        key2: true,
+        children: {
             select: {
-                typeId: true,
-                corporationId: true,
+                bKey: true,
             },
         },
     },

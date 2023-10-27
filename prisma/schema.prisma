@@ -7,19 +7,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model LoyaltyStoreOffer {
-  offerId       Int
-  corporationId Int
-  requiredItems LoyaltyStoreOfferRequiredItem[] @relation("LoyaltyStoreOfferRequiredItems")
+model A {
+  key1     Int
+  key2     Int
+  children B[]
 
-  @@id([offerId, corporationId])
+  @@id([key1, key2])
 }
 
-model LoyaltyStoreOfferRequiredItem {
-  offer         LoyaltyStoreOffer @relation("LoyaltyStoreOfferRequiredItems", fields: [offerId, corporationId], references: [offerId, corporationId])
-  offerId       Int
-  corporationId Int
-  typeId        Int
+model B {
+  a    A   @relation(fields: [key1, key2], references: [key1, key2])
+  key1 Int
+  key2 Int
+  bKey Int
 
-  @@id([offerId, corporationId, typeId])
+  @@id([key1, key2, bKey])
 }
