@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model LoyaltyStoreOffer {
+  offerId       Int
+  corporationId Int
+  requiredItems LoyaltyStoreOfferRequiredItem[] @relation("LoyaltyStoreOfferRequiredItems")
+
+  @@id([offerId, corporationId])
+}
+
+model LoyaltyStoreOfferRequiredItem {
+  offer         LoyaltyStoreOffer @relation("LoyaltyStoreOfferRequiredItems", fields: [offerId, corporationId], references: [offerId, corporationId])
+  offerId       Int
+  corporationId Int
+  typeId        Int
+
+  @@id([offerId, corporationId, typeId])
+}

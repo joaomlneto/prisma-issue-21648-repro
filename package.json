@@ -1,0 +1,38 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.js",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "db:studio": "npm run with-env prisma studio --browser none",
+    "db:generate": "prisma generate",
+    "db:generate:watch": "prisma generate --watch",
+    "db:push": "npm run with-env prisma db push --skip-generate",
+    "db:migrate:deploy": "npm run with-env prisma migrate deploy",
+    "db:migrate:dev": "npm run with-env prisma migrate dev",
+    "db:migrate:reset": "npm run with-env prisma migrate reset",
+    "dev": "npm run with-env concurrently -c \"auto\" --names \"Studio,Watch\" \"npm:db:studio\" \"npm:db:generate:watch\"",
+    "run-buggy-code": "node --experimental-specifier-resolution=node --loader ts-node/esm ./index.ts",
+    "lint": "eslint .",
+    "lint:fix": "npm run lint --fix",
+    "postinstall": "prisma generate",
+    "type-check": "tsc --jsx react-jsx --noEmit",
+    "with-env": "dotenv -e ../../.env --"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.18.6",
+    "concurrently": "^8.2.2",
+    "dotenv-cli": "^7.3.0",
+    "eslint": "^8.51.0",
+    "prettier": "^3.0.3",
+    "prisma": "^5.5.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}
